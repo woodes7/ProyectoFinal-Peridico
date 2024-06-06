@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Listado de Usuarios</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="../static/css/estilo.css" th:href="@{/css/estilo.css}">
+	<link rel="stylesheet" href="../static/css/menu.css" th:href="@{/css/menu.css}">
+	<link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+</head>
+
+<body>
+<div th:include="menu"></div>
+	<div class="container-fluid mt-4"> <!-- Utilizamos container-fluid en lugar de container -->
+		<h2 class="text-center mb-4">Usuarios Registrados</h2>
+		<div class="row mb-3">
+			<div class="col text-end">
+				<a class="btn btn-primary" th:href="@{/privada/crearUsuario}">Crear Usuario</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Email</th>
+								<th>Confirmada</th>
+								<th>Teléfono</th>
+								<th>Rol</th>
+								<th>Fecha de Alta</th>
+								<th>Estado</th>
+								<th>Bloqueado</th>
+								<th>Inicio Bloqueo</th>
+								<th>Fin Bloqueo</th>
+								<th>Inicio y fin de bloqueo</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="usuario : ${usuarios}">
+								<td th:text="${usuario.nombreUsuario}"></td>
+								<td th:text="${usuario.emailUsuario}"></td>
+								<td th:if="${usuario.confirmada}">Si</td>
+								<td th:if="${not usuario.confirmada}">No</td>
+								<td th:text="${usuario.tlfUsuario}"></td>
+								<td>
+									<form th:action="@{/privada/cambiarRol}" method="post">
+										<input type="hidden" name="userId" th:value="${usuario.id}">
+										<select name="roleId" class="form-select">
+											<option th:value="1" th:selected="${usuario.rol.id == 1}">SUPERADMIN
+											</option>
+											<option th:value="2" th:selected="${usuario.rol.id == 2}">ADMIN</option>
+											<option th:value="3" th:selected="${usuario.rol.id == 3}">AUTOR</option>
+											<option th:value="4" th:selected="${usuario.rol.id == 4}">USER</option>
+										</select>
+										<button type="submit" class="btn btn-sm btn-primary mt-1">Guardar</button>
+									</form>
+								</td>
+								<td th:text="${#dates.format(usuario.fechaAlta, 'yyyy-MM-dd')}"></td>
+								<td>
+									<form th:action="@{/privada/cambiarEstadoBloqueo}" method="post">
+										<input type="hidden" name="userId" th:value="${usuario.id}">
+										<input type="checkbox" name="bloqueado" th:checked="${usuario.bloqueado}">
+										<button type="submit" class="btn btn-sm btn-primary mt-1">Guardar</button>
+									</form>
+								</td>
+								<td>
+									<span th:if="${usuario.bloqueado}" class="text-danger">Bloqueado</span>
+									<span th:unless="${usuario.bloqueado}" class="text-success">No Bloqueado</span>
+
+								</td>
+
+								<td
+									th:text="${usuario.inicioBloqueo != null ? #dates.format(usuario.inicioBloqueo.time, 'yyyy-MM-dd') : 'N/A'}">
+								</td>
+								<td
+									th:text="${usuario.finBloqueo != null ? #dates.format(usuario.finBloqueo.time, 'yyyy-MM-dd') : 'N/A'}">
+								</td>
+								<td>
+									<form th:action="@{/privada/cambiarFechasBloqueo}" method="post">
+										<input type="hidden" name="userId" th:value="${usuario.id}">
+										<input type="date" name="inicioBloqueo"
+											th:value="${usuario.inicioBloqueo != null ? #dates.format(usuario.inicioBloqueo.time, 'yyyy-MM-dd') : ''}">
+										<input type="date" name="finBloqueo"
+											th:value="${usuario.finBloqueo != null ? #dates.format(usuario.finBloqueo.time, 'yyyy-MM-dd') : ''}">
+										<button type="submit" class="btn btn-sm btn-primary mt-1">Guardar</button>
+									</form>
+								</td>
+								<td>
+									<a class="btn btn-danger mt-2"
+										th:href="@{/privada/eliminarUsuario/{id}(id=${usuario.id})}"
+										onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">Eliminar</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:if="${noAdmin}">
+		<p th:text="${noAdmin}"></p>
+	</div>
+	<div th:if="${error}">
+		<p th:text="${error}"></p>
+	</div>
+
+	<!-- Tus scripts JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script th:src="@{/script/script.js}"></script>
+
+</body>
+
+</html>

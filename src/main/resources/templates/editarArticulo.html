@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Editar Artículo</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="../static/css/estilo.css" th:href="@{/css/estilo.css}">
+	<link rel="stylesheet" href="../static/css/menu.css" th:href="@{/css/menu.css}">
+	<link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+</head>
+
+<body>
+<div th:include="menu"></div>
+	
+	<h2 class="text-center mb-4">Editar Artículo</h2>
+	<div class="container mt-5">
+		
+		<div class="card" style="width: 18rem;">
+			<img class="card-img-top" alt="Imagen de Articulo" th:src="'data:image/jpeg;base64,' + ${ImagenPerfilBase64}">
+
+		</div>
+		<form th:action="@{/editarArticulo/{id}(id=${articuloDto.id})}" enctype="multipart/form-data"  method="post">
+			<div>
+				<label for="fotoArticulo">Foto de Articulo:</label><br>
+				<input type="file" name="archivo" /><br />
+			</div>
+			<input type="hidden" name="id" th:value="${articuloDto.id}">
+			<div class="mb-3">
+				<label for="titulo" class="form-label">Título</label>
+				<input type="text" class="form-control" id="titulo" name="titulo" th:value="${articuloDto.titulo}">
+			</div>
+			<div class="mb-3">
+				<label for="contenido" class="form-label">Contenido</label>
+				<textarea class="form-control" id="contenido" name="contenido" rows="6"
+					th:text="${articuloDto.contenido}"></textarea>
+			</div>
+
+			<div class="mb-3">
+				<label for="estado" class="form-label">Sección</label>
+				<select class="form-select" id="seccion" name="seccionId">
+					<option value="1" th:selected="${articuloDto.seccion.id == 1}">Nacional</option>
+					<option value="2" th:selected="${articuloDto.seccion.id == 2}">Internacional</option>
+					<option value="3" th:selected="${articuloDto.seccion.id == 3}">Informatica</option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="estado" class="form-label">Estado</label>
+				<select class="form-select" id="estado" name="estadoId">
+					<option value="1" th:selected="${articuloDto.estado.id == 1}">Borrador</option>
+					<option value="2" th:selected="${articuloDto.estado.id == 2}">Publicado</option>
+					<option value="3" th:selected="${articuloDto.estado.id == 3}">Corregido</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">Guardar</button>
+			<a th:href="@{/privada/listadoArticulo}" class="btn btn-secondary">Cancelar</a>
+			
+		</form>
+	</div>
+</body>
+
+</html>

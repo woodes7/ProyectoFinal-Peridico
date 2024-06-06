@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Artículos Encontrados</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="../static/css/estilo.css" th:href="@{/css/estilo.css}">
+    <link rel="stylesheet" href="../static/css/menu.css" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+</head>
+
+<body>
+	<div th:include="menu"></div>
+<div class="container mt-5">
+   <h2 class="text-center mb-4">Lista de Artículos</h2>
+
+    <div th:if="${not #lists.isEmpty(articulos)}">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Fecha de Creación</th>
+                    <th scope="col">Fecha de Publicación</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Sección</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="articuloDto : ${articulos}">
+                    <td th:text="${articuloDto.titulo}"></td>
+                    <td th:text="${#dates.format(articuloDto.fechaCreacion, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td th:text="${#dates.format(articuloDto.fechaPublicacion, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td th:text="${articuloDto.estado}"></td>
+                    <td th:text="${articuloDto.usuario.id}"></td>
+                    <td th:text="${articuloDto.seccion.nombre}"></td>
+                    <td>
+                        <a th:href="@{/privada/editarArticulo(id=${articuloDto.id})}">Editar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(articulos)}">
+        <p class="text-muted">No hay artículos disponibles.</p>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Editar Perfil</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="../static/css/estilo.css" th:href="@{/css/estilo.css}">
+	<link rel="stylesheet" href="../static/css/menu.css" th:href="@{/css/menu.css}">
+	<link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+</head>
+
+<body>
+	<div th:include="menu"></div>
+		
+	<h2 class="text-center mb-4">Editar Perfil</h2>
+	<div class="container mt-5">
+	<!-- Mostrar la imagen de perfil actual -->
+	<div class="card" style="width: 18rem;">
+		<img class="card-img-top" alt="Imagen de Perfil" th:src="'data:image/jpeg;base64,' + ${fotoPerfilBase64}">
+	</div>
+	<!-- Formulario para editar el perfil -->
+	<form class="form" th:action="@{/privada/editarPerfilpost}" enctype="multipart/form-data" method="post"
+		th:object="${usuarioDto}" id="editarPerfilForm">
+		<!-- Permitir al usuario cargar una nueva foto de perfil -->
+		<div>
+			<label for="fotoPerfil">Foto de Perfil:</label><br>
+			<input type="file" name="archivo" /><br />
+		</div>
+		<input type="hidden" name="id" th:field="*{id}">
+		<div>
+			<label for="nombreUsuario">Nombre de Usuario:</label><br>
+			<input class="form-control" type="text" id="nombreUsuario" name="nombreUsuario"
+				th:field="*{nombreUsuario}"><br>
+		</div>
+		<div>
+			<label for="emailUsuario">Correo Electrónico:</label><br>
+			<input class="form-control" type="email" id="emailUsuario" name="emailUsuario"
+				th:field="*{emailUsuario}"><br>
+		</div>
+		<div>
+			<label for="tlfUsuario">Teléfono:</label><br>
+			<input class="form-control" type="tel" id="tlfUsuario" name="tlfUsuario" th:field="*{tlfUsuario}"><br>
+		</div>
+		<div class="col">
+			<button type="submit" class="btn btn-primary btn-block">Guardar Cambios</button>
+		</div>
+	</form>
+
+	<form class="mb-3" method="GET">
+	</form>
+	<form th:action="@{/auth/iniciarRecuperacion}" th:method="get">
+		<button type="submit" class="form-btn negro">Recuperar contraseña</button>
+	</form>
+		</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script th:src="@{/script/script.js}"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

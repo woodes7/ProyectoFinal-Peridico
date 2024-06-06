@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Registro</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="../static/css/estilo.css" th:href="@{/css/estilo.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script th:src="@{/script/script.js}"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+</head>
+
+<body>
+
+	<header>
+		<h1>Periodico Primavera</h1>
+	</header>
+
+	<nav>
+		<div class="dropdown">
+			<a th:href="@{/auth/login}">Login</a>
+		</div>
+	</nav>
+
+	<div class="contenedor form-registro">
+		<p class="titulo">Nuevo Usuario</p>
+		<form class="form" th:action="@{/auth/registro}" enctype="multipart/form-data" method="post"
+			th:object="${usuarioDto}">
+			<input type="text" id="nombreUsuario" name="nombreUsuario" class="input" placeholder="Nombre Completo"
+				required th:value="*{nombreUsuario}">
+			<input type="text" id="tlfUsuario" name="tlfUsuario" class="input" placeholder="Telefono" required
+				th:value="*{tlfUsuario}">
+			<input type="email" id="emailUsuario" name="emailUsuario" class="input" placeholder="Email" required
+				th:value="*{emailUsuario}">
+			<input type="password" id="claveUsuario" name="claveUsuario" class="input" placeholder="Contraseña" required
+				th:value="*{claveUsuario}" oninput="revisarContraseña()">
+			<input type="password" id="confirmarClaveUsuario" name="confirmarClaveUsuario" class="input"
+				placeholder="Confirmar Contraseña" required oninput="revisarContraseña()">
+			<button type="submit" id="btnRegistro" class="form-btn btn btn-primary">Registrarse</button>
+			<div class="mensajeContrasenya" id="mensajeContrasenya"></div>
+			<div th:if="${nuevoUsuario == null}" th:text="${usuarioRegistradoPeroNoConfirmado}" style="color: red;">
+			</div>
+			<div th:if="${emailYaRegistrado != null}" th:text="${emailYaRegistrado}" style="color: red;"></div>
+		</form>
+	</div>
+
+	<div class="vg-footer bg-dark bg-gradient">
+		<div class="container d-flex justify-content-between align-items-center">
+
+			<ul class="nav list-unstyled d-flex">
+				<li class="ms-3"><a class="text-white" href="#"><i class="bi bi-twitter-x fs-4"></i></a></li>
+				<li class="ms-3"><a class="text-white" href="#"><i class="bi bi-facebook fs-4"></i></a></li>
+				<li class="ms-3"><a class="text-white" href="#"><i class="bi bi-instagram fs-4"></i></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<script th:if="${not #strings.isEmpty(mensajeErrorNickName)}">
+		mostrarNotificacion("¡Error!", "Ya se encuentra registrado un usuario con ese NickName", 'error');
+	</script>
+	<script th:if="${not #strings.isEmpty(mensajeErrorMail)}">
+		mostrarNotificacion("¡Error!", "El email ya se encuentra registrado en el sistema", 'error');
+	</script>
+</body>
+
+</html>

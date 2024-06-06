@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="../static/css/estilo.css" th:href="@{/css/estilo.css}">
+	<link rel="stylesheet" href="../static/css/menu.css" th:href="@{/css/menu.css}">
+	<link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+</head>
+
+<body>
+
+    <!-- Menú para usuarios no autenticados -->
+    <header>
+        <h1>Periódico Primavera</h1>
+    </header>
+    <nav>
+        <div style="display: flex; justify-content: space-between;">
+            <div>
+                <a th:href="@{/auth/registro}">Registrar</a>
+                <a th:href="@{/auth/login}">Login</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+	<script th:if="${not #strings.isEmpty(noAdmin)}">
+		mostrarNotificacion("¡Prohibido!", "No tiene permisos para acceder a este recurso", 'error');
+	</script>
+	<script src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script th:src="@{/script/script.js}"></script>
+</body>
+
+</html>

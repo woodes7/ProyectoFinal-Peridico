@@ -1,0 +1,8 @@
+2024-06-02 03:34:48,554 [INFO] Proyecto_Final.Periodico.controladores.UsuarioControlador [http-nio-8080-exec-3] inicio de metodo get loginCorrecto 
+2024-06-02 03:34:48,567 [INFO] Proyecto_Final.Periodico.servicios.ImplementacionsArticuloServicio [http-nio-8080-exec-3] Iniciando el método CuentaConfirmada
+2024-06-02 03:34:48,581 [INFO] Proyecto_Final.Periodico.servicios.ImplementacionsArticuloServicio [http-nio-8080-exec-3] Iniciando el método buscarPorEmail
+2024-06-02 03:34:48,590 [INFO] Proyecto_Final.Periodico.servicios.ImplementacionsArticuloServicio [http-nio-8080-exec-3] Iniciando el método usuarioToDto
+2024-06-02 03:34:48,590 [INFO] Proyecto_Final.Periodico.servicios.ImplementacionFotoServicio [http-nio-8080-exec-3] Iniciando el método convertirAbase64
+2024-06-02 03:34:48,596 [INFO] Proyecto_Final.Periodico.servicios.ImplementacionRolServicio [http-nio-8080-exec-3] Iniciando la conversión de Rol a RolDto
+2024-06-02 03:34:48,596 [INFO] Proyecto_Final.Periodico.servicios.ImplementacionRolServicio [http-nio-8080-exec-3] Conversión de Rol a RolDto realizada exitosamente
+2024-06-02 03:34:48,596 [INFO] Proyecto_Final.Periodico.controladores.UsuarioControlador [http-nio-8080-exec-3] Usuario 'superadmin@example.com' ha iniciado sesión correctamente.
